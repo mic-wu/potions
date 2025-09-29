@@ -1,0 +1,233 @@
+import { type Element } from './elements'
+
+export type IngredientStats = Record<Element, [number, number]>
+
+export interface Ingredient {
+  id: string
+  name: string
+  description: string
+  context: string
+  src: string
+  stats: IngredientStats
+}
+
+export const ingredients: Ingredient[] = [
+  {
+    id: 'crimsonBerry',
+    name: 'Crimson Berry',
+    description: 'A fiery red berry that radiates warmth.',
+    context: 'Increases fire potency but dampens ice properties.',
+    src: '/poke-ingredients/item_0158.png',
+    stats: {
+      fire: [15, 0.7],
+      water: [0, 0.6],
+      ground: [0, 0.7],
+      electric: [0, 0.8],
+      ice: [0, 0.4],
+    },
+  },
+  {
+    id: 'azureBloom',
+    name: 'Azure Bloom',
+    description: 'A delicate blue flower that seems to shimmer with moisture.',
+    context: 'Enhances water magic significantly.',
+    src: '/poke-ingredients/item_0159.png',
+    stats: {
+      fire: [0, 0.7],
+      water: [18, 0.7],
+      ground: [0, 0.8],
+      electric: [0, 0.5],
+      ice: [1, 0.9],
+    },
+  },
+  {
+    id: 'earthRoot',
+    name: 'Earth Root',
+    description: 'A thick, gnarled root that pulses with earthen energy.',
+    context: 'Stabilizes ground-based effects.',
+    src: '/poke-ingredients/item_0160.png',
+    stats: {
+      fire: [0, 0.8],
+      water: [0, 0.8],
+      ground: [15, 0.8],
+      electric: [0, 0.4],
+      ice: [0, 0.8],
+    },
+  },
+  {
+    id: 'thunderFruit',
+    name: 'Thunder Fruit',
+    description: 'A spiky yellow fruit that crackles with static electricity.',
+    context: 'Amplifies electrical properties.',
+    src: '/poke-ingredients/item_0161.png',
+    stats: {
+      fire: [2, 0.9],
+      water: [0, 0.6],
+      ground: [0, 0.8],
+      electric: [16, 0.9],
+      ice: [1, 0.9],
+    },
+  },
+  {
+    id: 'frostPetal',
+    name: 'Frost Petal',
+    description: 'A crystalline white petal that never melts.',
+    context: 'Greatly enhances ice magic at the cost of fire.',
+    src: '/poke-ingredients/item_0162.png',
+    stats: {
+      fire: [0, 0.3],
+      water: [5, 0.9],
+      ground: [0, 0.8],
+      electric: [3, 0.9],
+      ice: [19, 0.8],
+    },
+  },
+  {
+    id: 'emberCap',
+    name: 'Ember Cap',
+    description: 'A small mushroom with an orange glow.',
+    context: 'Provides steady fire enhancement with minor side effects.',
+    src: '/poke-ingredients/item_0163.png',
+    stats: { fire: [8, 0.8], water: [0, 0.9], ground: [4, 0.9], electric: [2, 0.9], ice: [0, 0.7] },
+  },
+  {
+    id: 'stormSeed',
+    name: 'Storm Seed',
+    description: 'A dark seed that hums with electric potential.',
+    context: 'Balances electric and water energies.',
+    src: '/poke-ingredients/item_0164.png',
+    stats: { fire: [0, 0.9], water: [7, 0.9], ground: [1, 0.9], electric: [9, 0.9], ice: [2, 0.9] },
+  },
+  {
+    id: 'crystalBerry',
+    name: 'Crystal Berry',
+    description: 'A translucent berry with ice formations.',
+    context: 'Creates powerful ice effects while reducing fire.',
+    src: '/poke-ingredients/item_0165.png',
+    stats: {
+      fire: [0, 0.4],
+      water: [3, 0.9],
+      ground: [0, 0.9],
+      electric: [1, 0.9],
+      ice: [14, 0.8],
+    },
+  },
+  {
+    id: 'vineHeart',
+    name: 'Vine Heart',
+    description: 'The core of an ancient vine, rich with earth essence.',
+    context: 'Provides strong ground magic boost.',
+    src: '/poke-ingredients/item_0166.png',
+    stats: {
+      fire: [0, 0.8],
+      water: [6, 0.9],
+      ground: [17, 0.8],
+      electric: [0, 0.8],
+      ice: [0, 0.8],
+    },
+  },
+  {
+    id: 'voidShard',
+    name: 'Void Shard',
+    description: 'A mysterious black crystal that absorbs all light.',
+    context: 'Resets all element values to zero, providing a clean slate.',
+    src: '/poke-ingredients/item_0167.png',
+    stats: { fire: [0, 0.0], water: [0, 0.0], ground: [0, 0.0], electric: [0, 0.0], ice: [0, 0.0] },
+  },
+  {
+    id: 'harmonicCrystal',
+    name: 'Harmonic Crystal',
+    description: 'A prismatic gem that hums with balanced energy.',
+    context: 'Provides modest increases to all elements equally.',
+    src: '/poke-ingredients/item_0168.png',
+    stats: { fire: [5, 0.9], water: [5, 0.9], ground: [5, 0.9], electric: [5, 0.9], ice: [5, 0.9] },
+  },
+  {
+    id: 'moltenCore',
+    name: 'Molten Core',
+    description: 'A glowing sphere of pure flame essence.',
+    context: 'Extreme fire enhancement but severely weakens all other elements.',
+    src: '/poke-ingredients/item_0169.png',
+    stats: {
+      fire: [25, 0.9],
+      water: [0, 0.2],
+      ground: [0, 0.3],
+      electric: [0, 0.4],
+      ice: [0, 0.1],
+    },
+  },
+  {
+    id: 'steadyStone',
+    name: 'Steady Stone',
+    description: 'A smooth, warm rock that pulses gently.',
+    context: 'Provides consistent moderate boosts with minimal side effects.',
+    src: '/poke-ingredients/item_0170.png',
+    stats: { fire: [6, 0.9], water: [6, 0.9], ground: [8, 0.9], electric: [6, 0.9], ice: [6, 0.9] },
+  },
+  {
+    id: 'chaosSpore',
+    name: 'Chaos Spore',
+    description: 'A swirling, multicolored fungal spore.',
+    context: 'Unpredictable effects that can dramatically shift element balance.',
+    src: '/poke-ingredients/item_0171.png',
+    stats: {
+      fire: [12, 0.5],
+      water: [8, 0.6],
+      ground: [15, 0.4],
+      electric: [20, 0.3],
+      ice: [10, 0.7],
+    },
+  },
+  {
+    id: 'purifyingMist',
+    name: 'Purifying Mist',
+    description: 'A shimmering vapor that cleanses impurities.',
+    context: 'Amplifies all positive effects while maintaining stability.',
+    src: '/poke-ingredients/item_0172.png',
+    stats: { fire: [3, 1.0], water: [3, 1.0], ground: [3, 1.0], electric: [3, 1.0], ice: [3, 1.0] },
+  },
+  {
+    id: 'primalEssence',
+    name: 'Primal Essence',
+    description: 'Ancient energy contained in a swirling orb.',
+    context: 'Massive power boost to dominant element while suppressing others.',
+    src: '/poke-ingredients/item_0173.png',
+    stats: {
+      fire: [30, 0.8],
+      water: [30, 0.8],
+      ground: [30, 0.8],
+      electric: [30, 0.8],
+      ice: [30, 0.8],
+    },
+  },
+  {
+    id: 'neutralAgent',
+    name: 'Neutral Agent',
+    description: 'A clear, odorless liquid that seems to do nothing.',
+    context: 'Gradually reduces all element intensities toward neutral.',
+    src: '/poke-ingredients/item_0174.png',
+    stats: { fire: [0, 0.8], water: [0, 0.8], ground: [0, 0.8], electric: [0, 0.8], ice: [0, 0.8] },
+  },
+  {
+    id: 'wildcardHerb',
+    name: 'Wildcard Herb',
+    description: 'A strange plant that changes color constantly.',
+    context: 'Randomly enhances one element while weakening its opposite.',
+    src: '/poke-ingredients/item_0175.png',
+    stats: {
+      fire: [15, 0.6],
+      water: [15, 0.6],
+      ground: [10, 0.7],
+      electric: [12, 0.6],
+      ice: [15, 0.6],
+    },
+  },
+  {
+    id: 'amplifierDust',
+    name: 'Amplifier Dust',
+    description: 'Fine golden powder that sparkles with potential.',
+    context: 'Doubles the effectiveness of other ingredients without adding elements.',
+    src: '/poke-ingredients/item_0176.png',
+    stats: { fire: [0, 1.2], water: [0, 1.2], ground: [0, 1.2], electric: [0, 1.2], ice: [0, 1.2] },
+  },
+]
