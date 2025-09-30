@@ -10,7 +10,8 @@ defineEmits<{
     close: []
 }>()
 
-const sets = [1, 2, 3, 4, 5].map((n) => potionEffects.filter((e) => e.requirements.dominantElements.length === n))
+// const sets = [1, 2, 3, 4, 5].map((n) => potionEffects.filter((e) => e.requirements.dominantElements.length === n))
+const sets = [potionEffects]
 
 </script>
 
@@ -18,22 +19,25 @@ const sets = [1, 2, 3, 4, 5].map((n) => potionEffects.filter((e) => e.requiremen
     <div class="modal-bg" v-if="shown" @click="$emit('close')">
         <div class="modal-panel">
             <div class="title">(click anywhere to close)</div>
-            <div class="effect-list" v-for="set in sets">
-                <div class="panel" v-for="effect in set">
-                    <div class="left">
-                        <img class="effect-thumb" :src="effect.img" />
-                    </div>
-                    <div class="right">
-                        <div class="header">
-                            <span class="effect-name">{{ effect.displayName }}</span>
+            <div class="effect-list" v-for="(set, i) in sets" :key="i">
+                <div class="panel" v-for="effect in set" :key="effect.id">
+                    <div class="leftright">
+                        <div class="left">
+                            <img class="effect-thumb" :src="effect.img" />
+                        </div>
+                        <div class="right">
+                            <div class="header">
+                                <span class="effect-name">{{ effect.displayName }}</span>
+                            </div>
+                            <div class="lore">
+                                {{ effect.lore }}
+                            </div>
+
                             <div class="dominant-els">
                                 <div v-for="el in effect.requirements.dominantElements" :key="el" class="dominant-els">
                                     <img :src="elementInfo[el].image" :alt="elementInfo[el].displayName" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="lore">
-                            {{ effect.lore }}
                         </div>
                     </div>
                 </div>
@@ -75,18 +79,23 @@ const sets = [1, 2, 3, 4, 5].map((n) => potionEffects.filter((e) => e.requiremen
 }
 
 .effect-list {
-    display: flex;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    /* flex-flow: row wrap; */
     justify-content: center;
     max-width: 1200px;
     gap: 16px;
     margin: 0 auto;
+    margin-bottom: 40px;
 }
 
 /*  */
 
 .panel {
     width: 240px;
+}
+
+.leftright {
     display: flex;
     gap: 8px;
     user-select: none;
@@ -115,8 +124,9 @@ const sets = [1, 2, 3, 4, 5].map((n) => potionEffects.filter((e) => e.requiremen
 
 .dominant-els {
     margin-top: 2px;
+    margin-left: 0px;
     display: inline-flex;
-    flex-flow: row-reverse;
+    flex-flow: row;
 }
 
 .dominant-els>img {

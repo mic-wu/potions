@@ -5,7 +5,7 @@ import StatBar from './components/StatBar.vue';
 import UsedIngredientsList from './components/UsedIngredientsList.vue';
 import IngredientSelection from './components/IngredientSelection.vue';
 import { elementInfo, type Element } from './lib/elements';
-import { dominantElements, matchEffect, newPotionEffect, unknownPotionEffect, withStatsApplied } from './lib/potionmechanics';
+import { dominantElements, matchEffect, newPotionEffect, unknownPotionEffect, withStatsApplied, withTiers } from './lib/potionmechanics';
 import PotionDisplay from './components/PotionDisplay.vue';
 import BookModal from './components/BookModal.vue';
 
@@ -27,7 +27,9 @@ const previewStats = computed(() => {
     return withStatsApplied(potionStats.value, hoveredIngredient.value.stats)
 });
 
+const tiers = computed(() => withTiers(potionStats.value))
 const dominantEls = computed(() => dominantElements(potionStats.value))
+const dominantTier = computed(() => Math.max(...Object.values(tiers.value)))
 const matchedEffect = computed(() => {
     const eff = matchEffect(potionStats.value)
     if (eff) return eff;
@@ -74,7 +76,7 @@ function hideModal() {
                             <img class="el-icon" :src="elinfo.image" />
                         </div>
                         <stat-bar :color="elinfo.color" :range="[0, 100]" :value="potionStats[elname]"
-                            :preview-value="previewStats[elname]" />
+                            :preview-value="previewStats[elname]" :dominant-tier="dominantTier" />
                     </div>
                 </div>
                 <UsedIngredientsList :used-ingredients="usedIngredients"

@@ -5,7 +5,8 @@ const props = defineProps<{
     color: string,
     range: [number, number],
     value: number,
-    previewValue?: number
+    previewValue?: number,
+    dominantTier?: number
 }>()
 
 const shownPreviewVal = ref<number | null>(null);
@@ -47,19 +48,23 @@ const barOpacity = computed(() => {
     return 1
 })
 
+const tickIntervals = [20, 40, 60, 80, 100]
 const tickMarks = computed(() => {
-    return [20, 40, 60, 80, 100].map(normalize)
+    return tickIntervals.map(normalize)
 })
 
 </script>
 
 <template>
     <div class="stat-bar">
-        <div class="stat-value preview" :style="{ width: `${normalizedPreviewValue}%`, backgroundColor: color}"></div>
-        <div class="stat-value" :style="{ width: `${normalizedValue}%`, backgroundColor: color, opacity: barOpacity  }"></div>
-        <div v-for="value in tickMarks" class="tick-mark" :style="{left: `${value}%`}"></div>
+        <div class="stat-value preview" :style="{ width: `${normalizedPreviewValue}%`, backgroundColor: color }"></div>
+        <div class="stat-value" :style="{ width: `${normalizedValue}%`, backgroundColor: color, opacity: barOpacity }">
+        </div>
+        <div v-for="(value, i) in tickMarks" class="tick-mark"
+            :class="{ reached: tickIntervals[i]! <= props.value, dominant: dominantTier === i + 1 }" :key="i"
+            :style="{ left: `${value}%` }">
+        </div>
     </div>
-    <!-- <div style="margin-left: 40px; z-index: 50;">{{ Math.floor(props.value) }}</div> -->
 </template>
 
 <style scoped>
@@ -79,7 +84,23 @@ const tickMarks = computed(() => {
     border-radius: 10px;
     background-color: white;
     z-index: 20;
+
+    opacity: 0.15;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
 }
+
+.tick-mark.dominant {
+    /* background-color: red; */
+
+    height: 8px;
+    width: 8px;
+}
+
+.tick-mark.dominant.reached {
+    opacity: 1;
+    /* opacity: 1; */
+}
+
 
 .stat-value {
     position: absolute;
