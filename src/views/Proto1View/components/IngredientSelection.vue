@@ -24,12 +24,18 @@ function color(tier: number) {
   }
 }
 
+const sets = [
+  ingredients.slice(0, 15),
+  ingredients.slice(15, 25),
+  ingredients.slice(25)
+]
+
 </script>
 
 <template>
   <div class="ingredients-section">
-    <div class="ingredients-list">
-      <div v-for="ing in ingredients" :key="ing.id" class="ingredient-item" @mouseenter="$emit('ingredientHover', ing)"
+    <div class="ingredients-list" v-for="(set, i) in sets" :key="i">
+      <div v-for="ing in set" :key="ing.id" class="ingredient-item" @mouseenter="$emit('ingredientHover', ing)"
         :style="{ backgroundColor: color(ing.rarity) }" @mouseleave="$emit('ingredientHover', null)"
         @click="$emit('ingredientClick', ing)">
         <img :src="ing.src" :alt="ing.name" />
@@ -39,7 +45,8 @@ function color(tier: number) {
       <img :src="hoveredIngredient.src" :alt="hoveredIngredient.name" class="preview-image" />
       <div>
         <div>{{ hoveredIngredient.name }}</div>
-        <p>{{ hoveredIngredient.description }} <em>{{ hoveredIngredient.context }}</em></p>
+        <p>{{ hoveredIngredient.description }}</p>
+        <p> <em>{{ hoveredIngredient.context }}</em></p>
       </div>
     </div>
   </div>
@@ -56,6 +63,8 @@ function color(tier: number) {
   display: flex;
   flex-flow: row wrap;
   gap: 8px;
+
+  margin-bottom: 18px;
 }
 
 .ingredient-item {
@@ -70,7 +79,7 @@ function color(tier: number) {
 }
 
 .ingredient-item:hover {
-  background-color: rgba(255, 255, 255, 0.12);
+  filter: brightness(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -93,8 +102,8 @@ function color(tier: number) {
 }
 
 .preview-image {
-  width: 68px;
-  height: 68px;
+  width: 42px;
+  height: 42px;
   user-select: none;
 }
 
@@ -105,7 +114,7 @@ function color(tier: number) {
 }
 
 .ingredient-preview>div>p {
-  margin: 0 0 15px 0;
+  margin: 0 0 0 0;
   opacity: 0.8;
   font-size: 12px;
   min-width: 0;

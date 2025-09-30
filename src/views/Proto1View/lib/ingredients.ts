@@ -360,7 +360,7 @@ export const ingredients: Ingredient[] = [
   },
   {
     id: 'iceleaf',
-    name: 'IceLeaf',
+    name: 'Ice Leaf',
     description: 'a frosty leaf.',
     context: 'large boost to ice and water, at the cost of fire',
     src: '/poke-ingredients/item_0219.png',
@@ -484,7 +484,7 @@ export const ingredients: Ingredient[] = [
     id: 'firebranch',
     name: 'Fiery Branch',
     description: 'a flaming branch. it turns all into flames.',
-    context: 'fire 100%. all other elements 0.',
+    context: 'fire 100%. all other elements zero.',
     src: '/poke-ingredients/item_1908.png',
     stats: {
       fire: [100, 1],
@@ -499,7 +499,7 @@ export const ingredients: Ingredient[] = [
     id: 'icebranch',
     name: 'Icy Branch',
     description: 'an icy branch. it turns all into frost.',
-    context: 'ice 100%. all other elements 0.',
+    context: 'ice 100%. all other elements zero.',
     src: '/poke-ingredients/item_1905.png',
     stats: {
       fire: [0, 0],
@@ -514,7 +514,7 @@ export const ingredients: Ingredient[] = [
     id: 'electricbranch',
     name: 'Electrified Branch',
     description: 'an electrified branch. it turns all into lightning.',
-    context: 'lightning 100%. all other elements 0.',
+    context: 'lightning 100%. all other elements zero.',
     src: '/poke-ingredients/item_1906.png',
     stats: {
       fire: [0, 0],
