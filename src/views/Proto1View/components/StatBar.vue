@@ -44,7 +44,7 @@ const normalizedPreviewValue = computed(() => {
 
 const barOpacity = computed(() => {
     const actualDisplayedPreviewVal = shownPreviewVal.value ?? props.previewValue;
-    if (actualDisplayedPreviewVal && actualDisplayedPreviewVal < props.value) return 0.5
+    if (actualDisplayedPreviewVal != null && actualDisplayedPreviewVal < props.value) return 0.5
     return 1
 })
 

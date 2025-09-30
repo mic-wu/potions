@@ -2,16 +2,16 @@
 const protoList = [
     {
         name: "proto1",
-        description: "add ingredients to tune five element stats (fire, water, earth, air, lightning). dominant stat decides primary effect. skibidi toilet"
+        description: "add ingredients to tune five element stats (fire, water, earth, air, lightning). dominant stats decide primary effect."
     },
-    {
-        name: "proto2",
-        description: "first iteration"
-    },
-    {
-        name: "proto3",
-        description: "first iteration"
-    },
+    // {
+    //     name: "proto2",
+    //     description: "first iteration"
+    // },
+    // {
+    //     name: "proto3",
+    //     description: "first iteration"
+    // },
 ]
 </script>
 

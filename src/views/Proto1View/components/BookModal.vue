@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { potionEffects } from '../lib/potionmechanics';
+import { potionEffects, type PotionEffect } from '../lib/potionmechanics';
 import { elementInfo } from '../lib/elements';
 
 defineProps<{
@@ -12,6 +12,10 @@ defineEmits<{
 
 // const sets = [1, 2, 3, 4, 5].map((n) => potionEffects.filter((e) => e.requirements.dominantElements.length === n))
 const sets = [potionEffects]
+
+function tierReq(effect: PotionEffect) {
+    return effect.requirements.thresholds.length === 0 ? 1 : effect.requirements.thresholds[0]!.val
+}
 
 </script>
 
@@ -36,6 +40,9 @@ const sets = [potionEffects]
                             <div class="dominant-els">
                                 <div v-for="el in effect.requirements.dominantElements" :key="el" class="dominant-els">
                                     <img :src="elementInfo[el].image" :alt="elementInfo[el].displayName" />
+                                </div>
+                                <div class="tier-num">
+                                    ≥T{{ tierReq(effect) }}
                                 </div>
                             </div>
                         </div>
@@ -106,6 +113,14 @@ const sets = [potionEffects]
     flex-flow: column;
     justify-content: start;
 }
+
+
+.tier-num {
+    margin-left: 12px;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
 
 .effect-thumb {
     height: 48px;

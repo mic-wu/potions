@@ -9,13 +9,29 @@ defineEmits<{
   ingredientHover: [ingredient: Ingredient | null]
   ingredientClick: [ingredient: Ingredient]
 }>()
+
+function color(tier: number) {
+  if (tier == 1) {
+    return "rgba(255, 255, 255, 0.08)"
+  } if (tier == 2) {
+    return "rgba(0, 255, 0, 0.12)"
+  } if (tier == 3) {
+    return "rgba(0, 255, 255, 0.12)"
+  } if (tier == 4) {
+    return "rgba(255, 60, 255, 0.12)"
+  } if (tier == 5) {
+    return "rgba(255, 255, 0, 0.12)"
+  }
+}
+
 </script>
 
 <template>
   <div class="ingredients-section">
     <div class="ingredients-list">
       <div v-for="ing in ingredients" :key="ing.id" class="ingredient-item" @mouseenter="$emit('ingredientHover', ing)"
-        @mouseleave="$emit('ingredientHover', null)" @click="$emit('ingredientClick', ing)">
+        :style="{ backgroundColor: color(ing.rarity) }" @mouseleave="$emit('ingredientHover', null)"
+        @click="$emit('ingredientClick', ing)">
         <img :src="ing.src" :alt="ing.name" />
       </div>
     </div>
@@ -23,7 +39,7 @@ defineEmits<{
       <img :src="hoveredIngredient.src" :alt="hoveredIngredient.name" class="preview-image" />
       <div>
         <div>{{ hoveredIngredient.name }}</div>
-        <p>{{ hoveredIngredient.description }}</p>
+        <p>{{ hoveredIngredient.description }} <em>{{ hoveredIngredient.context }}</em></p>
       </div>
     </div>
   </div>
@@ -32,7 +48,7 @@ defineEmits<{
 <style scoped>
 .ingredients-section {
   flex: 1;
-  width: 352px;
+  width: 292px;
 }
 
 .ingredients-list {
@@ -90,12 +106,17 @@ defineEmits<{
 
 .ingredient-preview>div>p {
   margin: 0 0 15px 0;
-  color: #666;
-  font-size: 14px;
+  opacity: 0.8;
+  font-size: 12px;
   min-width: 0;
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+  padding-right: 4px;
+}
+
+em {
+  opacity: 0.5;
 }
 </style>

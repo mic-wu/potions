@@ -107,7 +107,7 @@ function hideModal() {
 
 .brewing-container {
     display: flex;
-    gap: 40px;
+    gap: 64px;
     padding: 20px;
     box-sizing: border-box;
 }

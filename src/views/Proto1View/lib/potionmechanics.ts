@@ -19,13 +19,24 @@ export type PotionEffect = {
 }
 
 export function withStatsApplied(potStats: PotionStats, ingStats: IngredientStats): PotionStats {
-  return {
-    fire: potStats.fire * ingStats.fire[1] + ingStats.fire[0],
-    water: potStats.water * ingStats.water[1] + ingStats.water[0],
-    ground: potStats.ground * ingStats.ground[1] + ingStats.ground[0],
-    ice: potStats.ice * ingStats.ice[1] + ingStats.ice[0],
-    electric: potStats.electric * ingStats.electric[1] + ingStats.electric[0],
+  function clamp(v: number) {
+    return Math.max(0, Math.min(v, 100))
   }
+
+  return {
+    fire: clamp(potStats.fire * Math.sqrt(ingStats.fire[1]) + ingStats.fire[0]),
+    water: clamp(potStats.water * Math.sqrt(ingStats.water[1]) + ingStats.water[0]),
+    ground: clamp(potStats.ground * Math.sqrt(ingStats.ground[1]) + ingStats.ground[0]),
+    ice: clamp(potStats.ice * Math.sqrt(ingStats.ice[1]) + ingStats.ice[0]),
+    electric: clamp(potStats.electric * Math.sqrt(ingStats.electric[1]) + ingStats.electric[0]),
+  }
+  // return {
+  //   fire: clamp((potStats.fire + ingStats.fire[0]) * ingStats.fire[1]),
+  //   water: clamp((potStats.water + ingStats.water[0]) * ingStats.water[1]),
+  //   ground: clamp((potStats.ground + ingStats.ground[0]) * ingStats.ground[1]),
+  //   ice: clamp((potStats.ice + ingStats.ice[0]) * ingStats.ice[1]),
+  //   electric: clamp((potStats.electric + ingStats.electric[0]) * ingStats.electric[1]),
+  // }
 }
 
 export function withTiers(potStats: PotionStats): PotionTiers {
@@ -44,21 +55,38 @@ export function withTiers(potStats: PotionStats): PotionTiers {
 
 export function dominantElements(potStats: PotionStats): Element[] {
   const tiers = withTiers(potStats)
-  const maxTier = Math.max(...Object.values(tiers))
+  const maxTier = Math.max(...Object.values(tiers), 0)
   if (maxTier === 0) return []
   return Object.entries(tiers)
     .filter((entry) => entry[1] == maxTier)
     .map((entry) => entry[0]) as Element[]
 }
+export function maxTier(potStats: PotionStats): number {
+  const tiers = withTiers(potStats)
+  return Math.max(...Object.values(tiers), 0)
+}
+
+export function threshold(effect: PotionEffect) {
+  if (effect.requirements.thresholds.length === 0) {
+    return 1
+  }
+
+  return effect.requirements.thresholds[0]!.val
+}
 
 export function matchEffect(potStats: PotionStats): PotionEffect | undefined {
   const dominantEls = dominantElements(potStats)
-  const ans = potionEffects.find(
-    (v) =>
-      v.requirements.dominantElements.length === dominantEls.length &&
-      dominantEls.every((el) => v.requirements.dominantElements.includes(el)),
-  )
-  return ans
+  const mt = maxTier(potStats)
+  const candidates = potionEffects
+    .filter(
+      (v) =>
+        v.requirements.dominantElements.length === dominantEls.length &&
+        dominantEls.every((el) => v.requirements.dominantElements.includes(el)) &&
+        mt >= threshold(v),
+    )
+    .sort((v) => threshold(v))
+
+  return candidates[0]
 }
 
 // steps - work backwards:
@@ -362,7 +390,7 @@ export const newPotionEffect: PotionEffect = {
     ' elements with the highest tier</b> determine the potion effect.</em>',
   requirements: {
     dominantElements: [],
-    thresholds: [],
+    thresholds: [{ el: 'fire', val: 1000 }],
   },
   calculation: () => '',
 }
@@ -376,7 +404,7 @@ export const unknownPotionEffect: PotionEffect = {
   description: 'No known effect',
   requirements: {
     dominantElements: [],
-    thresholds: [],
+    thresholds: [{ el: 'fire', val: 1000 }],
   },
   calculation: () => '',
 }
